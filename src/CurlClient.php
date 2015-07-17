@@ -19,6 +19,7 @@ class CurlClient {
      * The actual curl client.
      */
     private $curlConnection;
+    private $curlOptions;
 
     /**
      * The list of post parameters that will be send in this call.
@@ -32,31 +33,39 @@ class CurlClient {
         }
 
         $this->requestData = [];
+        $this->curlOptions = [];
         $this->url = $url;
 
         // Not sure if let this to the user or do it automatically here.
-        $this->init();
+        $this->setDefaultOptions();
+    }
+
+    private function setDefaultOptions() {
+        $this->setOption(CURLOPT_URL, $this->url);
+
+        // TODO let the client set this params.
+        $this->setOption(CURLOPT_CONNECTTIMEOUT, 5);
+        $this->setOption(CURLOPT_TIMEOUT, 5);
+
+        // I think this are good defaults.
+        $this->setOption(CURLOPT_USERAGENT, "PHP 5.6: Custom cURL client.");
+        $this->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->setOption(CURLOPT_SSL_VERIFYPEER, true);
+        $this->setOption(CURLOPT_FOLLOWLOCATION, 1);
+        $this->setOption(CURLOPT_MAXREDIRS, 10);
     }
 
     private function init() {
         // TODO let's create this connection when we are ready to make a call, not
         // from the moment the object is created.
-        $this->curlConnection = curl_init($this->url);
-
-        // TODO see: curl_setopt_array
-        // TODO let the client set this params.
-        $this->setOption(CURLOPT_CONNECTTIMEOUT, 7);
-        $this->setOption(CURLOPT_TIMEOUT, 5);
-        $this->setOption(CURLOPT_USERAGENT, "PHP 5.6: Custom cURL client.");
-        $this->setOption(CURLOPT_RETURNTRANSFER, true);
-        $this->setOption(CURLOPT_SSL_VERIFYPEER, true);
-        $this->setOption(CURLOPT_FOLLOWLOCATION, 1);
+        $this->curlConnection = curl_init();
+        curl_setopt_array($this->curlConnection, $this->curlOptions);
     }
 
     public function setOption($option, $value) {
         // TODO If this is going to be public, which I think it should be, 
         // let's validate that we have a connection made.
-        curl_setopt($this->curlConnection, $option, $value);
+        $this->curlOptions[$option] = $value;
     }
 
     public function addRequestData($variable, $value) {
@@ -99,28 +108,32 @@ class CurlClient {
     }
 
     public function close() {
-        // TODO in a similar way, we need to indicate (if we are supposed to take care of this)
-        // that the connection was close.
-        // TODO let's make this function silent. Or is it silent by default?
-        curl_close($this->curlConnection);
+        // Let's not report anything if there's no connection.
+        if ($this->curlConnection) {
+            curl_close($this->curlConnection);
+        }
     }
 
     private function execute() {
+        if (!$this->curlConnection) {
+            $this->init();
+        }
+
         $result = curl_exec($this->curlConnection);
+        // TODO, look like I don't have a way to reuse the connection for 
+        // other calls, specially when I want to switch between POST and GET, 
+        // POST is setting options that I don't know how they will behave with 
+        // GET.
+        // For now, we close the connection.
+        $this->close();
 
         // If we received a boolean and it's false, then we got an issue.
         if (is_bool($result) && !$result) {
             // We report what the issue was.
             $this->debugInfo();
 
-            // we close the connection.
-            $this->close();
-
             throw new RuntimeException("Call to resouce '" . $this->url . "' failed.");
         } else {
-            // we close the connection.
-            $this->close();
-
             return $result;
         }
     }
