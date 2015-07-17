@@ -109,13 +109,15 @@ class CurlClient {
 
     public function close() {
         // Let's not report anything if there's no connection.
-        if ($this->curlConnection) {
+        // TODO for some reason, even checking if the var is set, I still am 
+        // getting into the block to close the already closed connection.
+        if (isset($this->curlConnection)) {
             curl_close($this->curlConnection);
         }
     }
 
     private function execute() {
-        if (!$this->curlConnection) {
+        if (!isset($this->curlConnection)) {
             $this->init();
         }
 
