@@ -1,6 +1,6 @@
 <?php
 
-require_once("../../src/utils/PostUtils.php");
+require_once("./PostUtils.php");
 
 /**
  * Will provide a cURL connection. Ther are several default option set.
@@ -54,6 +54,8 @@ class CurlClient {
     }
 
     public function setOption($option, $value) {
+        // TODO If this is going to be public, which I think it should be, 
+        // let's validate that we have a connection made.
         curl_setopt($this->curlConnection, $option, $value);
     }
 
@@ -87,6 +89,8 @@ class CurlClient {
         $requestData = $this->prepareRequestData();
         // TODO it's being a while, but when we make a get we don't necessarily 
         // need request data. So this check should be reviewed.
+        // TODO OR if we don't have the connection already made, then store 
+        // this in an array, then when the connection is open we pass it.
         if (PostUtils::hasData($requestData)) {
             $this->setOption(CURLOPT_URL, $this->url . "?$requestData");
         }
@@ -97,6 +101,7 @@ class CurlClient {
     public function close() {
         // TODO in a similar way, we need to indicate (if we are supposed to take care of this)
         // that the connection was close.
+        // TODO let's make this function silent. Or is it silent by default?
         curl_close($this->curlConnection);
     }
 
