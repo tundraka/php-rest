@@ -1,5 +1,5 @@
 <?php
-    require_once('./CurlClient.php');
+    use Utils\CurlClient;
 
     // flickr API
     // https://www.flickr.com/services/feeds/docs/photos_public/

@@ -1,6 +1,8 @@
 <?php
 
-require_once("./PostUtils.php");
+namespace Utils;
+
+use Utils\PostUtils;
 
 /**
  * Will provide a cURL connection. Ther are several default option set.

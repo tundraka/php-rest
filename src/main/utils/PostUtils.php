@@ -1,5 +1,7 @@
 <?php
 
+namespace Utils;
+
 class PostUtils {
     
     static public function hasData($value) {
