@@ -1,0 +1,5 @@
+{
+    "require": {
+        "internations/http-mock": "0.7.*"
+    }
+}
