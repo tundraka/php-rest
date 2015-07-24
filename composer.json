@@ -1,5 +1,6 @@
 {
     "require": {
+        "phpunit/phpunit": "4.7.*",
         "internations/http-mock": "0.7.*"
     }
 }

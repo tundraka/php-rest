@@ -1,6 +1,5 @@
 <?php
-
-namespace Utils;
+require 'vendor/autoload.php';
 
 class CurlClientTest extends \PHPUnit_Framework_TestCase {
     use \InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
