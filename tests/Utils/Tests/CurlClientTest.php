@@ -1,9 +1,11 @@
 <?php
-require 'vendor/autoload.php';
+
+namespace Utils\Tests;
+
+use \Utils\CurlClient;
 
 class CurlClientTest extends \PHPUnit_Framework_TestCase {
     use \InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
-    use \Utils\CurlClient;
 
     public static function setUpBeforeClass() {
         static::setUpHttpMockBeforeClass('8082', 'localhost');
