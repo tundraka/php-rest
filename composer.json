@@ -2,5 +2,8 @@
     "require": {
         "phpunit/phpunit": "4.7.*",
         "internations/http-mock": "0.7.*"
+    },
+    "autoload": {
+        "psr-0": {"Utils\\": "src/"}
     }
 }

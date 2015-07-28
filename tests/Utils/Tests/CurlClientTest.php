@@ -34,7 +34,9 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase {
             ->end();
         $this->http->setUp();
 
-        $this->assertSame('mocked body', file_get_contents('http://localhost:8082/foo'));
+        $curlClient = new CurlClient('http://localhost:8082/foo');
+        $response = $curlClient->get();
+        $this->assertEquals('mocked body', $response);
     }
 
 }

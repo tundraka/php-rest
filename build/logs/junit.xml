@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="jeziel/curl-client" tests="1" assertions="2" failures="0" errors="0" time="0.526888">
-    <testsuite name="Utils\Tests\CurlClientTest" file="/home/jeziel/code/php-rest/tests/Utils/Tests/CurlClientTest.php" tests="1" assertions="2" failures="0" errors="0" time="0.526888">
-      <testcase name="testSimpleRequest" class="Utils\Tests\CurlClientTest" file="/home/jeziel/code/php-rest/tests/Utils/Tests/CurlClientTest.php" line="26" assertions="2" time="0.526888"/>
+  <testsuite name="jeziel/curl-client" tests="1" assertions="2" failures="0" errors="0" time="0.840213">
+    <testsuite name="Utils\Tests\CurlClientTest" file="/home/jeziel/code/php-rest/tests/Utils/Tests/CurlClientTest.php" tests="1" assertions="2" failures="0" errors="0" time="0.840213">
+      <testcase name="testSimpleRequest" class="Utils\Tests\CurlClientTest" file="/home/jeziel/code/php-rest/tests/Utils/Tests/CurlClientTest.php" line="26" assertions="2" time="0.840213"/>
     </testsuite>
   </testsuite>
 </testsuites>
